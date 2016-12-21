@@ -91,7 +91,4 @@ contract InvoiceContract{
                 return false;
             }
       }
-      
-  
-    
-    } 
+   }
