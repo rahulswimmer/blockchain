@@ -1,0 +1,61 @@
+var common = require("./commonscript.js");
+var web3 = common.web3(common.node1);
+
+var primary;
+var invoiceIdentifier ="0x79807c6b27484d4d9d58d10a52716d127adc450b65b4cef175757400b01eabce";
+
+var mapperContractAbi = common.mapperContractAbi;
+var mapperContractAddress = common.mapperContractAddress;
+var nullAddress = common.nullAddress;
+var passwordPrimaryAccount = common.passwordPrimaryAccount;
+var invoiceNotFound = common.invoiceNotFound;
+
+var mappercontract = web3.eth.contract(mapperContractAbi).at(mapperContractAddress,function(error, result){
+    if(!error){
+        mappercontract = result;
+        mappercontract.getInvoiceContractAddress.call(invoiceIdentifier, function(error, result){
+            if(!error){
+                if(result == nullAddress){
+                    console.log("Invoice not found");
+                }
+                else{
+                    invoiceContractAddress = result;
+                    console.log("Invoice found: "+result);
+                    web3.eth.getAccounts(function(error, result){
+                        if(!error){
+                            var invoiceContractAbi = common.invoiceContractAbi;
+                            primary = result[0];
+                            web3.eth.contract(invoiceContractAbi).at(invoiceContractAddress, function(error, result){
+                                if(!error){
+                                    var invoices = result;
+                                    web3.personal.unlockAccount(primary, passwordPrimaryAccount, function(error, result){
+                                        if(!error){
+                                            invoices.getStatus.call({from:primary,gas:300000},function(error, result){
+                                                if(!error){
+                                                    var iv = result;
+													console.log(web3.toAscii(iv).replace(/\u0000/g, ''));
+                                                }else{
+                                                    console.error(error);
+                                                }
+                                            });
+                                        }else{
+                                            console.error(error);
+                                        }
+                                    });
+                                }else{
+                                    console.error(error);
+                                }
+                            });
+                        }else{
+                            console.error(error);
+                        }
+                    });
+                }
+            }else{
+                console.error(error);
+            }
+        });
+    }else{
+        console.error(error);
+    }
+});

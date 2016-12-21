@@ -1,0 +1,85 @@
+pragma solidity ^0.4.4;
+contract InvoiceContract{
+    
+      bytes32 invoiceNumber;
+      string sellerName;
+      string buyerName;
+      string financerName;
+      uint dateOfInvoice;
+      uint amountDue;
+      uint dateOfPayFinancerToSeller;
+      uint  discountRateByFinancer;
+      uint amountByFinancerToSeller;
+      uint dateOfPayBuyerToFinancer;
+      uint amountByBuyerToFinancer;
+      bytes32 status;
+      bytes32 invoiceIdentifier;
+      address public owner;
+
+      function InvoiceContract(bytes32 invoiceNo, uint doi, string selNm, string buyNm,uint amtDue)
+      {
+         owner = msg.sender;
+         invoiceNumber = invoiceNo;
+         dateOfInvoice = doi;
+         sellerName = selNm;
+         buyerName = buyNm;
+         amountDue = amtDue;
+         invoiceIdentifier = keccak256(sellerName, buyerName, invoiceNumber);
+         status ="OPEN";
+        
+       }
+   function getInvoiceDetails()constant returns(bytes32 invoiceNo,uint doi, string selNm, 
+   string buyNm, 
+   string finNm, uint amtDue, uint discByf, uint dofs, uint apfs ,
+   uint dobf,uint apbf, bytes32 stat)
+      {
+         invoiceNo = invoiceNumber;
+         doi = dateOfInvoice;
+         selNm = sellerName;
+         buyNm = buyerName;
+         amtDue = amountDue;
+         stat = status;
+         finNm = financerName;
+         discByf = discountRateByFinancer;
+         dofs = dateOfPayFinancerToSeller;
+         apfs = amountByFinancerToSeller;
+         dobf = dateOfPayBuyerToFinancer;
+         apbf = amountByBuyerToFinancer;
+      }
+      function getIdentifier()constant returns(bytes32){
+          return invoiceIdentifier;
+      }
+    
+      function getStatus()constant returns (bytes32){
+          return status;
+      }
+      
+      function updateStatus(bytes32 stat)returns (bytes32){
+          status = stat;
+      }
+      
+      function invoiceFinanced(bytes32 invoiceIdentifier, string finName, uint discByF)returns (bool){
+          if(status == "OPEN"){
+          financerName = finName;
+          discountRateByFinancer = discByF;
+          amountByFinancerToSeller =(amountDue * (100-discByF)) /100;
+          status = "FINANCED";
+          dateOfPayFinancerToSeller=now;
+                return true;
+          }
+          else{
+              return false;
+          }
+        
+      }
+      
+      function invoicePaidByBuyer(bytes32 invoiceIdentifier, uint amtBtoF) returns (bool){
+            dateOfPayBuyerToFinancer = now;
+            amountByBuyerToFinancer = amtBtoF ;
+            status = "COMPLETE";
+            return true;
+      }
+      
+  
+    
+    } 

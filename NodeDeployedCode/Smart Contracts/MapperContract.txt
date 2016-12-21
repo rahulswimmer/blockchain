@@ -1,0 +1,50 @@
+pragma solidity ^0.4.4;
+contract MapperContract{
+    mapping (bytes32 => address) public  invoiceContracts;
+    mapping (uint => bytes32) public  invoiceIndex;
+    
+    uint invoiceCount;
+    //bytes32 invoiceIdentifier; 
+    
+    function addInvoice(bytes32 invoiceIdentifier, address invoiceContract) returns(bool) {
+        if(checkInvoice(invoiceIdentifier)==true){
+            return false;
+        }
+        invoiceContracts[invoiceIdentifier] = invoiceContract;
+        invoiceIndex[invoiceCount] = invoiceIdentifier;
+        invoiceCount++;
+        return true;
+    }
+    
+    function getAllInvoices() constant returns(bytes32[] invoices){
+        invoices = new bytes32[](invoiceCount);
+        for(uint i=0;i<invoiceCount;i++)
+        {
+           invoices[i]=invoiceIndex[i];
+        }
+    }
+    
+    function getInvoiceContractAddress(bytes32 invoiceIdentifier) constant returns(address addr){
+        addr = invoiceContracts[invoiceIdentifier];
+    }
+    
+    function getInvoiceCount()constant returns(uint){
+        
+        return invoiceCount;
+    }
+    
+    function checkInvoice(bytes32 invoiceno)constant returns (bool){
+      
+        for(uint i=0;i<invoiceCount;i++)
+        {
+            if(invoiceIndex[i] == invoiceno)
+                return true;
+        }
+        return false;
+    }
+ 
+ function checkInvoiceExists(string sellerName,string  buyerName, bytes32 invoiceNumber) constant returns (bool){
+     bytes32 invoiceIdentifier = keccak256(sellerName, buyerName, invoiceNumber);
+     return checkInvoice(invoiceIdentifier);
+ }   
+}
