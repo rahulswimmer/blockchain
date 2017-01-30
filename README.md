@@ -40,16 +40,25 @@ Now we have to initialize our node so we create a Custom Genesis file which cont
 
 {
     "nonce": "0x0000000000000042",
+    
     "timestamp": "0x0",
+    
     "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    
     "extraData": "0x0",
+    
     "gasLimit": "0x8000000",
+    
     "difficulty": "0x400",
+    
     "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    
     "coinbase": "0x3333333333333333333333333333333333333333",
+    
     "alloc": {
 
     }
+    
 }
 Don't think twice and copy paste this code in a file named "genesis.json" and save it in your node1 folder.
 Now the initial state of the node is ready,so we need ethereum to identify this node, so we type in the command prompt the following command:
