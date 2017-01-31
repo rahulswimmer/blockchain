@@ -9,9 +9,13 @@ Important terminologies:
 
 Ledger: Its a log of transactions. Any transaction performed, it's entry is made in ledger.
 Distributed ledger: Everyone in the network has a copy of the same global legder and after each transaction, the same ledger is updated. So consistency of the ledger is maintained and is transparent. 
+
 Miner: Miner means the node or individual that validates the transaction. This transaction is then added in a chain type fashion where previous transaction's hash is stored in the next transaction.
+
 Gas: Any transaction that changes or updates the state of the structure requires gas to do so. Its just a numerical figure  that needs to be passed while operation. Eg: While withdrawing money from an account, money will be deducted and balance is changed (so state is changed), so we pass gas (can be any number like 3000,300000). Its analogous to a car that needs gas so that it can move forward (change its state).
+
 Public and Private blockchain: In public blockchain you join a network which is public or transparent to everyone. Here you make real world transactions. In private blockchain network, you create your own network and create your own currency (ether). Used for development and test purpose.
+
 Smart contracts: The business logic of any application is written in a smart contract. It's like a class in java.
 
 Softwares used:
