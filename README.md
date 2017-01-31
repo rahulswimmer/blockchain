@@ -21,9 +21,13 @@ Smart contracts: The business logic of any application is written in a smart con
 Softwares used:
 
 Solidity: Its a smart contract language. You write code in solidity, compile it using online browser and save this compiled code as js file and run on terminal.
+
 Ethereum: Its a blockchain framework used to create robust de centralized based application. Ethereum has a command line tool called go-eth that we use for creating our private blockchain network.
+
 NodeJS: Compiled solidity code is wrapped in nodeJS and then executed on terminal.
+
 Hubot Script: Gives libraries to input data,viz: robot hear function.
+
 Slack: Interactive chat based tool used to execute transactions.
 
 Implementation:
